@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const AddTarea = () => {
+const AddTarea = ( {onAdd} ) => {
     const [text, setText] = useState('')
     const [date, setDate] = useState('')
     const [finished, setFinished] = useState(false)
@@ -9,17 +9,26 @@ const AddTarea = () => {
         
         if(!text) {
             alert('Please type a task')
+            return
         }
         if(!date) {
             alert('Please type a date')
+            return
         }
 
+        onAdd({ text, date, finished})
+        setText('')
+        setDate('')
+        setFinished(false)
+
     }
+
+    
 
   return (
     <form className="add-form" onSubmit={onSubmit}>
         <div className='form-control'>
-            <label>Tarea</label>
+            <label>Task</label>
             <input type='text' placeholder='Type a task'
             value={text}
             onChange={(e)=> setText(e.target.value)}

@@ -9,6 +9,7 @@ import './App.css'
 */
 
 function App() {
+  const[seeAddTasks, setSeeAddTasks] = useState(false)
   const [dataTasks, setTasks] = useState ([
     {
         id: 1,
@@ -42,13 +43,19 @@ function App() {
     console.log("terminada", id)
     setTasks(dataTasks.map((task)=> task.id === id ? {...task, finished: !task.finished } :task))
   }
-
+  
+  //Add task
+  const addTask = (task) =>{
+    const id = Math.floor(Math.random() * 1000) +1
+    const newTask ={id, ...task}
+    setTasks([...dataTasks, newTask])
+  }
 
 
   return (
       <div className='container'>
-        <Header titulo='Tasks Planner' />
-        <AddTarea />
+        <Header titulo='Tasks Planner' onAdd={()=>setSeeAddTasks(!seeAddTasks)} seeAddTasks={seeAddTasks} />
+        {seeAddTasks && <AddTarea onAdd={addTask}/>}
         {dataTasks.length> 0 ? <Tareas tasks={dataTasks} onDelete={deleteTask} onToggle={endedToggle} /> :'There are no elements to show'}
         
       </div>
