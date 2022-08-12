@@ -1,6 +1,7 @@
 import Header from './assets/components/Header'
 import { useState } from 'react'
 import Tareas from './assets/components/Tareas'
+import AddTarea from './assets/components/AddTarea'
 /* Borrar lo siquiente ya que borramos los archivos app.css y react.svg
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
@@ -36,10 +37,19 @@ function App() {
     setTasks(dataTasks.filter((task) => task.id !== id))
   }
 
+// End Toggle between classes
+  const endedToggle = (id) => {
+    console.log("terminada", id)
+    setTasks(dataTasks.map((task)=> task.id === id ? {...task, finished: !task.finished } :task))
+  }
+
+
+
   return (
       <div className='container'>
         <Header titulo='Tasks Planner' />
-        {dataTasks.length> 0 ? <Tareas tasks={dataTasks} onDelete={deleteTask}/> :'There are no elements to show'}
+        <AddTarea />
+        {dataTasks.length> 0 ? <Tareas tasks={dataTasks} onDelete={deleteTask} onToggle={endedToggle} /> :'There are no elements to show'}
         
       </div>
   )
